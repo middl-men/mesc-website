@@ -686,12 +686,16 @@ html[data-theme="dark"] .emblem rect { fill: #fff; }
   .pstage__spec { margin-top: 4px; font-size: 10px; }
   .products__lists { order: 2; }
   .partners__head { grid-template-columns: 1fr; gap: 24px; }
-  .accordion { flex-direction: column; height: auto; }
-  .acc { flex: none; height: 110px; transition: height .9s var(--ease); }
-  .acc.is-open { height: 420px; }
-  .acc:not(.is-open) h3 { writing-mode: horizontal-tb; transform: none; align-self: auto; }
-  .acc h3 { white-space: normal; }
-  .acc:not(.is-open) p { display: none; }  /* hidden copy would otherwise push the title out of the collapsed row */
+  .accordion { flex-direction: column; height: auto; min-height: 0; }
+  /* heights are set per row from main.js; content is anchored to the top so the title never travels */
+  .acc, .acc.is-open { flex: none; }
+  .acc { height: 110px; transition: height .7s cubic-bezier(.65, 0, .35, 1); }
+  .acc.is-open { height: 400px; }
+  .acc__in { justify-content: flex-start; padding: 22px; gap: 10px; }
+  .acc__in > .mono { position: static; }
+  .acc h3, .acc:not(.is-open) h3 { writing-mode: horizontal-tb; transform: none; align-self: auto; white-space: normal; font-size: 22px; }
+  .acc p { transform: translateY(12px); transition: opacity .35s, transform .6s var(--ease-out); }
+  .acc.is-open p { transition-delay: .22s; }
   .filling, .csr { grid-template-columns: 1fr; gap: 60px; }
   .badge { width: 120px; height: 120px; top: -30px; right: 8px; }
   .display { font-size: 10.4vw; font-variation-settings: "wdth" 104; }

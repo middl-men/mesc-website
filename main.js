@@ -560,8 +560,35 @@
   // Services accordion
   {
     const accs = $$(".acc");
-    const open = (a) => accs.forEach((o) => o.classList.toggle("is-open", o === a));
+    // Mobile: rows stack, so each row is sized to its own content (title stays put, copy fades in below)
+    // and the page scroll is compensated so the tapped row doesn't slide out from under the finger
+    const ACC_EASE = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2); // matches the CSS height curve
+    const accPad = (a) => parseFloat(getComputedStyle($(".acc__in", a)).paddingBottom);
+    const closedH = (a) => { const h3 = $("h3", a); return h3.offsetTop + h3.offsetHeight + accPad(a); };
+    const openH = (a) => { const p = $("p", a); return Math.max(p.offsetTop + p.offsetHeight + accPad(a), 340); };
+    const sizeAccs = () => accs.forEach((a) => (a.style.height = isMobile() ? (a.classList.contains("is-open") ? openH(a) : closedH(a)) + "px" : ""));
+    let accRefresh;
+    const open = (a) => {
+      if (a.classList.contains("is-open")) return;
+      const prev = accs.find((o) => o.classList.contains("is-open"));
+      const shift = isMobile() && prev && accs.indexOf(prev) < accs.indexOf(a) ? prev.offsetHeight - closedH(prev) : 0;
+      const top = a.getBoundingClientRect().top; // measured before anything moves
+      accs.forEach((o) => o.classList.toggle("is-open", o === a));
+      if (!isMobile()) return;
+      sizeAccs();
+      const overflow = Math.max(0, top + openH(a) - (innerHeight - 16));
+      const delta = -shift + Math.min(overflow, Math.max(0, top - 90));
+      if (Math.abs(delta) > 1) {
+        if (lenis) lenis.scrollTo(scrollY + delta, { duration: 0.7, easing: ACC_EASE });
+        else window.scrollTo({ top: scrollY + delta, behavior: "smooth" });
+      }
+      clearTimeout(accRefresh);
+      accRefresh = setTimeout(() => ScrollTrigger.refresh(), 760);
+    };
     accs.forEach((a) => { if (fine) a.addEventListener("mouseenter", () => open(a)); a.addEventListener("click", () => open(a)); });
+    sizeAccs();
+    addEventListener("resize", sizeAccs);
+    document.fonts && document.fonts.ready.then(sizeAccs);
     gsap.from(accs, { y: 80, opacity: 0, duration: 1.2, stagger: 0.08, ease: "expo.out", scrollTrigger: { trigger: ".accordion", start: "top 85%" } });
     gsap.from(".badge", { scale: 0, rotate: -120, duration: 1.4, ease: "expo.out", scrollTrigger: { trigger: ".filling", start: "top 70%" } });
     gsap.from(".agents > div", { y: 30, opacity: 0, duration: 1, stagger: 0.07, ease: "expo.out", scrollTrigger: { trigger: ".agents", start: "top 90%" } });
