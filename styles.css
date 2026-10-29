@@ -7,7 +7,7 @@
   --blue: #1F3E93;
   --ink: #0B0B0C;
   --ink-2: #151517;
-  --paper: #EFEDE8;
+  --paper: #FFFFFF;
   --paper-2: #E4E1DA;
   --steel: #23262B;
   --bg: var(--ink);
@@ -348,7 +348,7 @@ html[data-theme="dark"] .emblem rect { fill: #fff; }
 .card:nth-child(3) { top: calc(12vh + 36px); }
 .card:nth-child(4) { top: calc(12vh + 54px); }
 .card--red { background: var(--red); }
-.card--paper { background: #fff; color: var(--ink); border-color: rgba(0,0,0,.08); }
+.card--paper { background: #fff; color: var(--ink); border-color: rgba(0,0,0,.1); box-shadow: 0 30px 60px -30px rgba(0,0,0,.18); }  /* page is white too, so the card needs its own edge */
 .card--steel { background: var(--steel); }
 .card__body { padding: clamp(28px, 4vw, 64px); display: flex; flex-direction: column; justify-content: flex-end; gap: 22px; }
 .card .eyebrow { color: inherit; opacity: .7; margin: 0 0 auto; }
