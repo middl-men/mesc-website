@@ -600,7 +600,9 @@ html[data-theme="dark"] .emblem rect { fill: #fff; }
   padding: 22px 34px; border-radius: 99px; background: var(--red); color: #fff;
   font-size: clamp(18px, 2.2vw, 34px); font-weight: 600; font-variation-settings: "wdth" 110; letter-spacing: -.01em;
 }
-.contact__mail i { font-style: normal; display: inline-block; transition: transform .5s var(--ease-out); }
+.contact__mail i { font-style: normal; display: inline-grid; place-items: center; transition: transform .5s var(--ease-out); }
+/* drawn as SVG: the ↗ character renders as a colour emoji on iOS/Android */
+.contact__mail i svg { width: 1.05em; height: 1.05em; display: block; }
 .contact__mail:hover i { transform: rotate(45deg); }
 .offices { margin-top: 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 .office { border-top: 1px solid var(--line); padding-top: 20px; display: grid; gap: 14px; align-content: start; }
