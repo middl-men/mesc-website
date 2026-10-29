@@ -733,8 +733,8 @@ html[data-theme="dark"] .emblem rect { fill: #fff; }
   .rail__hint { white-space: nowrap; }
   /* menu: size links to the screen height and scroll rather than clip on short phones */
   .menu { padding-top: 90px; overflow-y: auto; align-items: stretch; }
-  .menu__grid { margin-top: auto; gap: 28px; }
-  .menu__list a { font-size: clamp(28px, 5.4vh, 60px); }
+  .menu__grid { margin-top: auto; gap: 22px; }
+  .menu__list a { font-size: clamp(26px, 4.9vh, 56px); }
   .menu__aside { gap: 16px; }
   /* products: pin the panel flush under the header and keep the orb inside it */
   .pstage { top: 70px; padding: 16px 4px 16px; grid-template-columns: 100px 1fr; }
